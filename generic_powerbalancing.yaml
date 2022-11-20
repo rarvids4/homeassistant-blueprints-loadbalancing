@@ -169,7 +169,7 @@ variables:
   entL3Current: !input 'il3'
   entMaxCurrent: !input 'imaxfuse'
   #entBatterySOC: !input 'ibatterysoc'
-  entBatteryMinSoC: !input 'iminbatterylevel'
+#  entBatteryMinSoC: !input 'iminbatterylevel'
 #  entBatteryBoostPower: !input 'ibatteryboostpower'
   entChargingPower: !input 'ichargerpower'
 #  entExternalVoltage: !input 'iexternalvoltage'
