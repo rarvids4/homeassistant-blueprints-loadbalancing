@@ -2,8 +2,7 @@ blueprint:
   domain: automation
   name: PhaseMeasurement + SolarCells + Easee PV Loadbalancing
   description: This automation connects A generic interface and Easee for PV load balancing.
-  In the example below the production is done on phase L3
-    <br><br>You need to have Power sensors and Easee integration up and running.
+    <br><br>Need to have integrations up and running
   source_url: 
   input:
     isolarpower:
