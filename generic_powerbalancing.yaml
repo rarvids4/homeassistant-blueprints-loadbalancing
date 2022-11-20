@@ -16,40 +16,40 @@ blueprint:
       default: sensor.solaredge_current_power
     iconsumptionpower:
       name: Consumption power sensor
-      description: 'By default: sensor.power_hobergsvagen_22'
+      description: 'By default: sensor.power_tibber'
       selector:
         entity:
           domain: sensor
           device_class: power
           multiple: false
-      default: sensor.power_hobergsvagen_22
+      default: sensor.power_tibber
     il1:
       name: L1 phase current
-      description: 'By default: sensor.current_l1_hobergsvagen_22'
+      description: 'By default: sensor.current_l1_tibber'
       selector:
         entity:
           domain: sensor
           device_class: current
           multiple: false
-      default: sensor.current_l1_hobergsvagen_22
+      default: sensor.current_l1_tibber
     il2:
       name: L2 phase current
-      description: 'By default: sensor.current_l2_hobergsvagen_22'
+      description: 'By default: sensor.current_l2_tibber'
       selector:
         entity:
           domain: sensor
           device_class: current
           multiple: false
-      default: sensor.current_l2_hobergsvagen_22
+      default: sensor.current_l2_tibber
     il3:
       name: L3 phase current
-      description: 'By default: sensor.current_l3_hobergsvagen_22'
+      description: 'By default: sensor.current_l3_tibber'
       selector:
         entity:
           domain: sensor
           device_class: current
           multiple: false
-      default: sensor.current_l3_hobergsvagen_22
+      default: sensor.current_l3_tibber
     #ibatterysoc:
     #  name: Ferroamp HOME battery state of charge sensor
     #  description: 'By default: sensor.ferroamp_system_state_of_charge'
