@@ -91,18 +91,6 @@ blueprint:
         entity:
           domain: sensor
           multiple: false
-#    iminbatterylevel:
-#      name: 'Boost charging with homebattery if SoC is above:'
-#      description: Boost charging with home battery power if home battery SoC is above
-#        this limit.
-#      selector:
-#        number:
-#          min: 0.0
-#          max: 100.0
-#          step: 1.0
-#          unit_of_measurement: '%'
-#          mode: slider
-#      default: 20
     imaxfuse:
       name: 'Max fuse size in the house in Ampere:'
       description: This is the fuse size of the house
@@ -169,7 +157,6 @@ variables:
   entL3Current: !input 'il3'
   entMaxCurrent: !input 'imaxfuse'
 # entBatterySOC: !input 'ibatterysoc'
-# entBatteryMinSoC: !input 'iminbatterylevel'
 # entBatteryBoostPower: !input 'ibatteryboostpower'
   entChargingPower: !input 'ichargerpower'
 #  entExternalVoltage: !input 'iexternalvoltage'
