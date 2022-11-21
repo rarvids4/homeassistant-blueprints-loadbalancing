@@ -168,25 +168,6 @@ variables:
 # {% if states(entBatterySOC)|float >= entBatteryMinSoC|float %} 
 # {% set powerAvailable = powerAvailable + entBatteryBoostPower|float %} 
 # {% endif %}  
-  valCurrentAvailableForCharging: '
-    {% set currentAvailableL1 =  (states(entMaxCurrent)|float - (states(entL1Current)|float)))|int%}
-    {% set currentAvailableL2 =  (states(entMaxCurrent)|float - (states(entL2Current)|float)))|int%}
-    {% set currentAvailableL3 =  (states(entMaxCurrent)|float - (states(entL3Current)|float)))|int%} 
-    {% set currentAvailable = (currentAvailableL3)|int %}
-    {% if (currentAvailableL3 < currentAvailableL2)%}
-        {% set currentAvailable = currentAvailableL2 %}
-    {% endif %}
-     {% if (currentAvailableL1 < currentAvailable)%}
-        {% set currentAvailable = currentAvailableL1%}
-    {% endif %}
-    
-    {% set EaseeAvailableCurrent = (currentAvailable) | float %} 
-    {% if EaseeAvailableCurrent < 0 %}  
-      {% set EaseeAvailableCurrent = 0 %} 
-      {% elif EaseeAvailableCurrent > 20%}  
-      {% set EaseeAvailableCurrent = 20 %}  
-    {% endif %} 
-    {{ EaseeAvailableCurrent|int}
-    }'
+  valCurrentAvailableForCharging: ' {% set currentAvailableL1 =  (states(entMaxCurrent)|float   - (states(entL1Current)|float)))|int%} {% set currentAvailableL2 =  (states(entMaxCurrent)|float - (states(entL2Current)|float)))|int%} {% set currentAvailableL3 =  (states(entMaxCurrent)|float - (states(entL3Current)|float)))|int%} {% set currentAvailable = (currentAvailableL3)|int %}{% if (currentAvailableL3 < currentAvailableL2)%}    {% set currentAvailable = currentAvailableL2 %}    {% endif %}    {% if (currentAvailableL1 < currentAvailable)%}    {% set currentAvailable = currentAvailableL1%}    {% endif %}    {% set EaseeAvailableCurrent = (currentAvailable) | float %}     {% if EaseeAvailableCurrent < 0 %}      {% set EaseeAvailableCurrent = 0 %}     {% elif EaseeAvailableCurrent > 20%}    {% set EaseeAvailableCurrent = 20 %}      {% endif %}     {{ EaseeAvailableCurrent|int}}'
 mode: restart
 max_exceeded: silent
