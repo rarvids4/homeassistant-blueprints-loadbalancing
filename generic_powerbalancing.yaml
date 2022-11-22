@@ -91,6 +91,13 @@ blueprint:
         entity:
           domain: sensor
           multiple: false
+    ichargercurrentactual:
+      name: Actual Charge Current
+      description: 'By default: sensor.<your easee name>_current'
+      selector:
+        entity:
+          domain: sensor
+          multiple: false
     imaxfuse:
       name: 'Max fuse size in the house in Ampere:'
       description: This is the fuse size of the house
@@ -156,6 +163,7 @@ variables:
   entL2Current: !input 'il2'
   entL3Current: !input 'il3'
   entMaxCurrent: !input 'imaxfuse'
+  entChargerCurrent: !input 'ichargercurrentactual'
 # entBatterySOC: !input 'ibatterysoc'
 # entBatteryBoostPower: !input 'ibatteryboostpower'
   entChargingPower: !input 'ichargerpower'
@@ -168,6 +176,6 @@ variables:
 # {% if states(entBatterySOC)|float >= entBatteryMinSoC|float %} 
 # {% set powerAvailable = powerAvailable + entBatteryBoostPower|float %} 
 # {% endif %}  
-  valCurrentAvailableForCharging: ' {% set currentAvailableL1 =  (states(entMaxCurrent)|float   - (states(entL1Current)|float)))|int%} {% set currentAvailableL2 =  (states(entMaxCurrent)|float - (states(entL2Current)|float)))|int%} {% set currentAvailableL3 =  (states(entMaxCurrent)|float - (states(entL3Current)|float)))|int%} {% set currentAvailable = (currentAvailableL3)|int %}{% if (currentAvailableL3 < currentAvailableL2)%}    {% set currentAvailable = currentAvailableL2 %}    {% endif %}    {% if (currentAvailableL1 < currentAvailable)%}    {% set currentAvailable = currentAvailableL1%}    {% endif %}    {% set EaseeAvailableCurrent = (currentAvailable) | float %}     {% if EaseeAvailableCurrent < 0 %}      {% set EaseeAvailableCurrent = 0 %}     {% elif EaseeAvailableCurrent > 20%}    {% set EaseeAvailableCurrent = 20 %}      {% endif %}     {{ EaseeAvailableCurrent|int}}'
+  valCurrentAvailableForCharging: ' {% set currentAvailableL1 =  (states(entMaxCurrent)|float   - ((states(entL1Current)|float)-(states(entChargerCurrent)|float))|int%} {% set currentAvailableL2 =  (states(entMaxCurrent)|float - ((states(entL2Current)|float)-(states(entChargerCurrent)|float)))|int%} {% set currentAvailableL3 =  (states(entMaxCurrent)|float - ((states(entL3Current)|float)-(states(entChargerCurrent)|float)))|int%} {% set currentAvailable = (currentAvailableL3)|int %}{% if (currentAvailableL3 < currentAvailableL2)%}    {% set currentAvailable = currentAvailableL2 %}    {% endif %}    {% if (currentAvailableL1 < currentAvailable)%}    {% set currentAvailable = currentAvailableL1%}    {% endif %}    {% set EaseeAvailableCurrent = (currentAvailable) | float %}     {% if EaseeAvailableCurrent < 0 %}      {% set EaseeAvailableCurrent = 0 %}     {% elif EaseeAvailableCurrent > 20%}    {% set EaseeAvailableCurrent = 20 %}      {% endif %}     {{ EaseeAvailableCurrent|int}}'
 mode: restart
 max_exceeded: silent
