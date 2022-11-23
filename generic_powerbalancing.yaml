@@ -185,7 +185,7 @@ variables:
   {% set currentAvailableL3 = (states(entMaxCurrent)|float - ((states(entL3Current)|float)-
   (states(entChargerCurrent)|float)))|int%} 
   {% set currentAvailable = (currentAvailableL3)|float%} 
-  {% if currentAvailableL3 < currentAvailableL2%}    
+  {% if currentAvailableL2 < currentAvailableL3%}    
   {% set currentAvailable = currentAvailableL2 %}  
   {% endif %}    
   {% if (currentAvailableL1 < currentAvailable)%}    
