@@ -100,7 +100,7 @@ blueprint:
           device_class: current
           multiple: false
           default: sensor.current_Renault_zoe
-     ichargercurrentactualslave:
+     islaveactual:
       name: Actual Charge Current Slave
       description: 'By default: sensor.<your easee name>_current'
       selector:
@@ -175,7 +175,7 @@ variables:
   entL3Current: !input 'il3'
   entMaxCurrent: !input 'imaxfuse'
   entChargerCurrent: !input 'ichargercurrentactual'
-  entChargerCurrentS: !input 'ichargercurrentactualslave'
+  entChargerCurrentS: !input 'islaveactual'
   entChargingPower: !input 'ichargerpower'
 #  entExternalVoltage: !input 'iexternalvoltage'
   entChargerStatus: !input 'ichargerstatus'
