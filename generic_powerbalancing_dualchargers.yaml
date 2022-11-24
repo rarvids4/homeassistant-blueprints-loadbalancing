@@ -91,13 +91,6 @@ blueprint:
         entity:
           domain: sensor
           multiple: false
-     ichargerstatuslave:
-      name: Slave Charger Status
-      description: 'By default: sensor.<your easee name>_status'
-      selector:
-        entity:
-          domain: sensor
-          multiple: false
     ichargercurrentactual:
       name: Actual Charge Current Master
       description: 'By default: sensor.<your easee name>_current'
