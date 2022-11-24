@@ -153,7 +153,7 @@ blueprint:
       selector:
         time: {}
 trigger:
-- platform: numeric_state
+- platform: state
   entity_id:
   - !input 'il1'
 condition:
