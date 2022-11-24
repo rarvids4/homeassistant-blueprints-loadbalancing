@@ -175,7 +175,7 @@ variables:
   entL3Current: !input 'il3'
   entMaxCurrent: !input 'imaxfuse'
   entChargerCurrent: !input 'ichargercurrentactual'
-  entChargerCurrentS: !input 'islaveactual'
+  entChargerSlave: !input 'islaveactual'
   entChargingPower: !input 'ichargerpower'
 #  entExternalVoltage: !input 'iexternalvoltage'
   entChargerStatus: !input 'ichargerstatus'
@@ -189,7 +189,7 @@ variables:
 # {% set powerAvailable = powerAvailable + entBatteryBoostPower|float %} 
 # {% endif %}  
   valCurrentAvailableForCharging: ' 
-  {% set chargeCurrentTotal = (states(entChargerCurrent)|float)+(states(entChargerCurrentS)|float)%} 
+  {% set chargeCurrentTotal = (states(entChargerCurrent)|float)+(states(entChargerSlave)|float)%} 
   {% set currentAvailableL1 =  (states(entMaxCurrent)|float - ((states(entL1Current)|float)-(chargeCurrentTotal)))|int%} 
   {% set currentAvailableL2 =  (states(entMaxCurrent)|float - ((states(entL2Current)|float)-
   (chargeCurrentTotal)))|int%} 
