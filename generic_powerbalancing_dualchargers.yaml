@@ -100,7 +100,7 @@ blueprint:
           device_class: current
           multiple: false
           default: sensor.current_Renault_zoe
-     islaveactual:
+    islaveactual:
       name: Actual Charge Current Slave
       description: 'By default: sensor.<your easee name>_current'
       selector:
@@ -108,7 +108,7 @@ blueprint:
           domain: sensor
           device_class: current
           multiple: false
-          default: sensor.current_Polestar_2
+          default: sensor.current_Polestar
     imaxfuse:
       name: 'Max fuse size in the house in Ampere:'
       description: This is the fuse size of the house
