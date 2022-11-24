@@ -108,7 +108,6 @@ blueprint:
           domain: sensor
           device_class: current
           multiple: false
-          default: sensor.current_Polestar
     imaxfuse:
       name: 'Max fuse size in the house in Ampere:'
       description: This is the fuse size of the house
