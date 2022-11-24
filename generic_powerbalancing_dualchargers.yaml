@@ -157,9 +157,9 @@ trigger:
   entity_id:
   - !input 'il1'
 condition:
-#- condition: state
-#  entity_id: !input 'ichargerstatus'
-#  state: charging
+- condition: state
+  entity_id: !input 'ichargerstatus'
+  state: charging
 - condition: template
   value_template: '{{ (states(entChargerDynamicLimit)|int) != valCurrentAvailableForCharging
     }}'
