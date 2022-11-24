@@ -91,7 +91,7 @@ blueprint:
         entity:
           domain: sensor
           multiple: false
-     ichargerstatusslave:
+     ichargerstatuslave:
       name: Slave Charger Status
       description: 'By default: sensor.<your easee name>_status'
       selector:
@@ -188,7 +188,7 @@ variables:
   entChargingPower: !input 'ichargerpower'
 #  entExternalVoltage: !input 'iexternalvoltage'
   entChargerStatus: !input 'ichargerstatus'
-  entChargerStatusS: !input 'ichargerstatusslave'
+  
 #  valExternalVoltage: '{% if state_attr(entChargerStatus, ''config_phaseMode'') ==
 #    1 %} {{ states(entExternalVoltage)|float / 3 }} {% else %} {{ states(entExternalVoltage)|float
 #    }} {% endif %}'
