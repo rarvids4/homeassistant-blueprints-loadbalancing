@@ -3,7 +3,7 @@ blueprint:
   name: PhaseMeasurement + SolarCells + Easee PV Loadbalancing
   description: This automation connects A generic interface and Easee for PV load balancing.
     <br><br>Need to have integrations with Easee and Tibber or similar up and running
-  source_url: https://github.com/rarvids4/homeassistant-blueprints-loadbalancing/blob/main/generic_powerbalancing.yaml
+  source_url: https://github.com/rarvids4/homeassistant-blueprints-loadbalancing/blob/main/generic_powerbalancing_dualchargers.yaml
   input:
     isolarpower:
       name: Solar Power Sensor
@@ -91,7 +91,7 @@ blueprint:
         entity:
           domain: sensor
           multiple: false
-     ichargerstatus_s:
+     ichargerstatusslave:
       name: Slave Charger Status
       description: 'By default: sensor.<your easee name>_status'
       selector:
@@ -107,7 +107,7 @@ blueprint:
           device_class: current
           multiple: false
           default: sensor.current_Renault_zoe
-     ichargercurrentactual_s:
+     ichargercurrentactualslave:
       name: Actual Charge Current Slave
       description: 'By default: sensor.<your easee name>_current'
       selector:
@@ -153,7 +153,7 @@ blueprint:
       selector:
         time: {}
 trigger:
-- platform: state
+- platform: numeric_state
   entity_id:
   - !input 'il1'
 condition:
@@ -182,13 +182,13 @@ variables:
   entL3Current: !input 'il3'
   entMaxCurrent: !input 'imaxfuse'
   entChargerCurrent: !input 'ichargercurrentactual'
-  entChargerCurrentS: !input 'ichargercurrentactual_s'
+  entChargerCurrentS: !input 'ichargercurrentactualslave'
 # entBatterySOC: !input 'ibatterysoc'
 # entBatteryBoostPower: !input 'ibatteryboostpower'
   entChargingPower: !input 'ichargerpower'
 #  entExternalVoltage: !input 'iexternalvoltage'
   entChargerStatus: !input 'ichargerstatus'
-  entChargerStatusS: !input 'ichargerstatus_s'
+  entChargerStatusS: !input 'ichargerstatusslave'
 #  valExternalVoltage: '{% if state_attr(entChargerStatus, ''config_phaseMode'') ==
 #    1 %} {{ states(entExternalVoltage)|float / 3 }} {% else %} {{ states(entExternalVoltage)|float
 #    }} {% endif %}'
@@ -197,7 +197,7 @@ variables:
 # {% set powerAvailable = powerAvailable + entBatteryBoostPower|float %} 
 # {% endif %}  
   valCurrentAvailableForCharging: ' 
-  {% set chargeCurrentTotal = (states(entChargerCurrent)|float)+(states(entChargerCurrent)|float)%} 
+  {% set chargeCurrentTotal = (states(entChargerCurrent)|float)+(states(entChargerCurrentS)|float)%} 
   {% set currentAvailableL1 =  (states(entMaxCurrent)|float - ((states(entL1Current)|float)-(chargeCurrentTotal)))|int%} 
   {% set currentAvailableL2 =  (states(entMaxCurrent)|float - ((states(entL2Current)|float)-
   (chargeCurrentTotal)))|int%} 
