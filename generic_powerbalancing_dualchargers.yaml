@@ -93,7 +93,7 @@ blueprint:
           multiple: false
     ichargercurrentactual:
       name: Actual Charge Current Master
-      description: 'By default: sensor.<your easee name>_current'
+      description: 'By default: sensor.<master>_current'
       selector:
         entity:
           domain: sensor
@@ -102,7 +102,7 @@ blueprint:
           default: sensor.current_Renault_zoe
     islaveactual:
       name: Actual Charge Current Slave
-      description: 'By default: sensor.<your easee name>_current'
+      description: 'By default: sensor.<slave>_current'
       selector:
         entity:
           domain: sensor
