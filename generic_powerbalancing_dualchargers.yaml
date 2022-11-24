@@ -91,15 +91,24 @@ blueprint:
         entity:
           domain: sensor
           multiple: false
-    ichargercurrentactual:
-      name: Actual Charge Current
+    ichargercurrentactualslave:
+      name: Slave Charge Current
       description: 'By default: sensor.<your easee name>_current'
       selector:
         entity:
           domain: sensor
           device_class: current
           multiple: false
-          default: sensor.current_Renault_zoe
+      default: sensor.current_Renault_zoe
+    ichargercurrentactual:
+      name: Master Charge Current
+      description: 'By default: sensor.<your easee name>_current'
+      selector:
+        entity:
+          domain: sensor
+          device_class: current
+          multiple: false
+      default: sensor.current_Renault_zoe
     imaxfuse:
       name: 'Max fuse size in the house in Ampere:'
       description: This is the fuse size of the house
@@ -166,6 +175,7 @@ variables:
   entL3Current: !input 'il3'
   entMaxCurrent: !input 'imaxfuse'
   entChargerCurrent: !input 'ichargercurrentactual'
+  entChargerCurrentSlave: !input 'ichargercurrentactualslave'
   entChargingPower: !input 'ichargerpower'
 #  entExternalVoltage: !input 'iexternalvoltage'
   entChargerStatus: !input 'ichargerstatus'
@@ -179,7 +189,7 @@ variables:
 # {% set powerAvailable = powerAvailable + entBatteryBoostPower|float %} 
 # {% endif %}  
   valCurrentAvailableForCharging: ' 
-  {% set chargeCurrentTotal = (states(entChargerCurrent)|float)%} 
+  {% set chargeCurrentTotal = (states(entChargerCurrent)|float)+(states(entChargerCurrentSlave)|float)%} 
   {% set currentAvailableL1 =  (states(entMaxCurrent)|float - ((states(entL1Current)|float)-(chargeCurrentTotal)))|int%} 
   {% set currentAvailableL2 =  (states(entMaxCurrent)|float - ((states(entL2Current)|float)-
   (chargeCurrentTotal)))|int%} 
