@@ -118,7 +118,8 @@ blueprint:
         time: {}
 trigger:
 - platform: state
-  entity_id: - !input 'iconsumptionpower'
+  entity_id: 
+  - !input 'iconsumptionpower'
 condition:
 #- condition: state
 #  entity_id: !input 'ichargerstatus'
