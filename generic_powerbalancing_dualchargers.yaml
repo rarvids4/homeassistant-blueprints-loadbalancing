@@ -50,24 +50,6 @@ blueprint:
           device_class: current
           multiple: false
       default: sensor.current_l3_tibber
-    #ibatterysoc:
-    #  name: Ferroamp HOME battery state of charge sensor
-    #  description: 'By default: sensor.ferroamp_system_state_of_charge'
-    #  selector:
-    #    entity:
-    #      domain: sensor
-    #      device_class: battery
-    #      multiple: false
-    #  default: sensor.ferroamp_system_state_of_charge
-    #iexternalvoltage:
-    #  name: Ferroamp External voltage sensor
-    #  description: 'By default: sensor.ferroamp_external_voltage'
-    #  selector:
-    #    entity:
-    #      domain: sensor
-    #      device_class: voltage
-    #      multiple: false
-    #  default: sensor.ferroamp_external_voltage
     ichargerpower:
       name: Easee charging power sensor
       description: 'By default (kW): sensor.<your easee name>_power'
@@ -120,17 +102,6 @@ blueprint:
           unit_of_measurement: 'A'
           mode: slider
       default: 20
-#    ibatteryboostpower:
-#      name: Maximum homebattery discharge capacity
-#     description: Set your home battery maximum discharge power.
-#      selector:
-#        number:
-#          unit_of_measurement: W
-#          mode: box
-#          step: 100
-#          min: 0
-#          max: 25000
-#      default: 5000
     itimestart:
       name: Activate time
       description: Set the time you want the load balancing to activate. This is important
@@ -147,12 +118,11 @@ blueprint:
         time: {}
 trigger:
 - platform: state
-  entity_id:
-  - !input 'il1'
+  entity_id: - !input 'iconsumptionpower'
 condition:
-- condition: state
-  entity_id: !input 'ichargerstatus'
-  state: charging
+#- condition: state
+#  entity_id: !input 'ichargerstatus'
+#  state: charging
 - condition: template
   value_template: '{{ (states(entChargerDynamicLimit)|int) != valCurrentAvailableForCharging
     }}'
@@ -177,38 +147,29 @@ variables:
   entChargerCurrent: !input 'ichargercurrentactual'
   entChargerCurrentSlave: !input 'ichargercurrentactualslave'
   entChargingPower: !input 'ichargerpower'
-#  entExternalVoltage: !input 'iexternalvoltage'
+
   entChargerStatus: !input 'ichargerstatus'
-# entBatterySOC: !input 'ibatterysoc'
-# entBatteryBoostPower: !input 'ibatteryboostpower'  
-#  valExternalVoltage: '{% if state_attr(entChargerStatus, ''config_phaseMode'') ==
-#    1 %} {{ states(entExternalVoltage)|float / 3 }} {% else %} {{ states(entExternalVoltage)|float
-#    }} {% endif %}'
-# Paste this entity if you have the battery connected to your system:
-# {% if states(entBatterySOC)|float >= entBatteryMinSoC|float %} 
-# {% set powerAvailable = powerAvailable + entBatteryBoostPower|float %} 
-# {% endif %}  
-  valCurrentAvailableForCharging: ' 
-  {% set chargeCurrentTotal = (states(entChargerCurrent)|float)+(states(entChargerCurrentSlave)|float)%} 
-  {% set currentAvailableL1 =  (states(entMaxCurrent)|float - ((states(entL1Current)|float)-(chargeCurrentTotal)))|int%} 
-  {% set currentAvailableL2 =  (states(entMaxCurrent)|float - ((states(entL2Current)|float)-
-  (chargeCurrentTotal)))|int%} 
-  {% set currentAvailableL3 = (states(entMaxCurrent)|float - ((states(entL3Current)|float)-
-  (chargeCurrentTotal)))|int%} 
-  {% set currentAvailable = (currentAvailableL3)|float%} 
-  {% if currentAvailableL2 < currentAvailableL3%}    
-  {% set currentAvailable = currentAvailableL2 %}  
-  {% endif %}    
-  {% if (currentAvailableL1 < currentAvailable)%}    
-  {% set currentAvailable = currentAvailableL1%}
-  {% endif %}    
-  {% set EaseeAvailableCurrent = (currentAvailable)|float %}     
-  {% if EaseeAvailableCurrent < 0 %}      
-  {% set EaseeAvailableCurrent = 0 %}     
-  {% elif EaseeAvailableCurrent > 20%}    
-  {% set EaseeAvailableCurrent = 20 %}      
-  {% endif %}     
-  {{ EaseeAvailableCurrent|int
-  }}'
+
+  valCurrentAvailableForCharging: ' {% set chargeCurrentTotal =         (states(entChargerCurrent)|float)+(   states(entChargerCurrentSlave)|float)%} 
+    {% set currentAvailableL1 =  (states(entMaxCurrent)|float - ((states(entL1Current)|float)-    (chargeCurrentTotal)))|int%} 
+    {% set currentAvailableL2 =  (states(entMaxCurrent)|float - ((states(entL2Current)|float)-
+    (chargeCurrentTotal)))|int%} 
+    {% set currentAvailableL3 = (states(entMaxCurrent)|float - ((states(entL3Current)|float)-
+    (chargeCurrentTotal)))|int%} 
+    {% set currentAvailable = (currentAvailableL3)|float%} 
+    {% if currentAvailableL2 < currentAvailableL3%}    
+    {% set currentAvailable = currentAvailableL2 %}  
+    {% endif %}    
+    {% if (currentAvailableL1 < currentAvailable)%}    
+    {% set currentAvailable = currentAvailableL1%}
+    {% endif %}    
+    {% set EaseeAvailableCurrent = (currentAvailable)|float %}     
+    {% if EaseeAvailableCurrent < 0 %}      
+    {% set EaseeAvailableCurrent = 0 %}     
+    {% elif EaseeAvailableCurrent > 20%}    
+    {% set EaseeAvailableCurrent = 20 %}      
+    {% endif %}     
+    {{ EaseeAvailableCurrent|int
+    }}'
 mode: restart
 max_exceeded: silent
