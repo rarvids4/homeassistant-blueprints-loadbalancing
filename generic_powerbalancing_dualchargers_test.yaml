@@ -3,7 +3,7 @@ blueprint:
   name: PhaseMeasurement + SolarCells + Dual Chargers
   description: This automation connects A generic interface and Easee for PV load balancing.
     <br><br>Need to have integrations with Easee and Tibber or similar up and running.
-  source_url: https://github.com/rarvids4/homeassistant-blueprints-loadbalancing/blob/main/generic_powerbalancing_dualchargers.yaml
+  source_url: https://github.com/rarvids4/homeassistant-blueprints-loadbalancing/blob/main/generic_powerbalancing_dualchargers_test.yaml
   input:
     isolarpower:
       name: Solar power sensor
