@@ -151,13 +151,14 @@ variables:
     {{ EaseeAvailableCurrent|int
     }}'
 
-sequence:
+trigger:
 - condition: template
   value_template: '{{ (states(entChargerDynamicLimit)|int) != valCurrentAvailableForCharging
     }}'
 - condition: time
   after: !input 'itimestart'
   before: !input 'itimeend'
+action:
 - service:  easee.set_circuit_dynamic_limit
   data:
     charger_id: '{{ state_attr(entChargerStatus,''id'') }}
@@ -167,6 +168,6 @@ sequence:
 - delay:
     hours: 0
     minutes: 0
-    seconds: 1
+    seconds: 4
     milliseconds: 0
 mode: restart
