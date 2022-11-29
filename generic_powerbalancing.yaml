@@ -110,7 +110,6 @@ variables:
   entL2Current: !input 'il2'
   entL3Current: !input 'il3'
   entMaxCurrent: !input 'imaxfuse'
-  entChargingPower: !input 'ichargerpower'
   entChargerStatus: !input 'ichargerstatus'
   
   valCurrentAvailableForCharging: ' 
