@@ -4,7 +4,7 @@ blueprint:
   description: This automation connects A generic interface and Easee for PV load balancing.
     <br><br>Need to have integrations with Easee and Tibber or similar up and running
   source_url: https://github.com/rarvids4/homeassistant-blueprints-loadbalancing/blob/main/generic_powerbalancing.yaml
-  input:
+    input:
     isolarpower:
       name: Solar Power Sensor
       description: 'By default: sensor.solaredge_current_power'
@@ -14,68 +14,34 @@ blueprint:
           device_class: power
           multiple: false
       default: sensor.solaredge_current_power
-    iconsumptionpower:
-      name: Consumption power sensor
-      description: 'By default: sensor.power_tibber'
-      selector:
-        entity:
-          domain: sensor
-          device_class: power
-          multiple: false
-      default: sensor.power_tibber
     il1:
       name: L1 phase current
-      description: 'By default: sensor.current_l1_tibber'
+      description: 'By default: sensor.current_l1_hobergsvagen_22'
       selector:
         entity:
           domain: sensor
           device_class: current
           multiple: false
-      default: sensor.current_l1_tibber
+      default: sensor.current_l1_hobergsvagen_22
     il2:
       name: L2 phase current
-      description: 'By default: sensor.current_l2_tibber'
+      description: 'By default: sensor.current_l2_hobergsvagen_22'
       selector:
         entity:
           domain: sensor
           device_class: current
           multiple: false
-      default: sensor.current_l2_tibber
+      default: sensor.current_l2_hobergsvagen_22
     il3:
       name: L3 phase current
-      description: 'By default: sensor.current_l3_tibber'
+      description: 'By default: sensor.current_l3_hobergsvagen_22'
       selector:
         entity:
           domain: sensor
           device_class: current
           multiple: false
-      default: sensor.current_l3_tibber
-    #ibatterysoc:
-    #  name: Ferroamp HOME battery state of charge sensor
-    #  description: 'By default: sensor.ferroamp_system_state_of_charge'
-    #  selector:
-    #    entity:
-    #      domain: sensor
-    #      device_class: battery
-    #      multiple: false
-    #  default: sensor.ferroamp_system_state_of_charge
-    #iexternalvoltage:
-    #  name: Ferroamp External voltage sensor
-    #  description: 'By default: sensor.ferroamp_external_voltage'
-    #  selector:
-    #    entity:
-    #      domain: sensor
-    #      device_class: voltage
-    #      multiple: false
-    #  default: sensor.ferroamp_external_voltage
-    ichargerpower:
-      name: Easee charging power sensor
-      description: 'By default (kW): sensor.<your easee name>_power'
-      selector:
-        entity:
-          domain: sensor
-          device_class: power
-          multiple: false
+      default: sensor.current_l3_hobergsvagen_22
+   
     ichargerdynamiclimit:
       name: Easee Charger Dynamic limit sensor
       description: 'By default: sensor.<your easee name>_dynamic_charger_limit'
@@ -91,15 +57,6 @@ blueprint:
         entity:
           domain: sensor
           multiple: false
-    ichargercurrentactual:
-      name: Actual Charge Current
-      description: 'By default: sensor.<your easee name>_current'
-      selector:
-        entity:
-          domain: sensor
-          device_class: current
-          multiple: false
-          default: sensor.current_Renault_zoe
     imaxfuse:
       name: 'Max fuse size in the house in Ampere:'
       description: This is the fuse size of the house
@@ -111,17 +68,6 @@ blueprint:
           unit_of_measurement: 'A'
           mode: slider
       default: 20
-#    ibatteryboostpower:
-#      name: Maximum homebattery discharge capacity
-#     description: Set your home battery maximum discharge power.
-#      selector:
-#        number:
-#          unit_of_measurement: W
-#          mode: box
-#          step: 100
-#          min: 0
-#          max: 25000
-#      default: 5000
     itimestart:
       name: Activate time
       description: Set the time you want the load balancing to activate. This is important
@@ -151,7 +97,7 @@ condition:
   after: !input 'itimestart'
   before: !input 'itimeend'
 action:
-- service: easee.set_circuit_dynamic_limit 
+- service: easee.set_charger_dynamic_limit
   data:
     charger_id: '{{ state_attr(entChargerStatus,''id'') }}
       '
@@ -160,24 +106,13 @@ action:
 variables:
   entChargerDynamicLimit: !input 'ichargerdynamiclimit'
   entSolarPower: !input 'isolarpower'
-  entConsumptionPower: !input 'iconsumptionpower'
   entL1Current: !input 'il1'
   entL2Current: !input 'il2'
   entL3Current: !input 'il3'
   entMaxCurrent: !input 'imaxfuse'
-  entChargerCurrent: !input 'ichargercurrentactual'
-# entBatterySOC: !input 'ibatterysoc'
-# entBatteryBoostPower: !input 'ibatteryboostpower'
   entChargingPower: !input 'ichargerpower'
-#  entExternalVoltage: !input 'iexternalvoltage'
   entChargerStatus: !input 'ichargerstatus'
-#  valExternalVoltage: '{% if state_attr(entChargerStatus, ''config_phaseMode'') ==
-#    1 %} {{ states(entExternalVoltage)|float / 3 }} {% else %} {{ states(entExternalVoltage)|float
-#    }} {% endif %}'
-# Paste this entity if you have the battery connected to your system:
-# {% if states(entBatterySOC)|float >= entBatteryMinSoC|float %} 
-# {% set powerAvailable = powerAvailable + entBatteryBoostPower|float %} 
-# {% endif %}  
+  
   valCurrentAvailableForCharging: ' 
   {% set currentAvailableL1 =  (states(entMaxCurrent)|float - ((states(entL1Current)|float)-(states(entChargerCurrent)|float)))|int%} 
   {% set currentAvailableL2 =  (states(entMaxCurrent)|float - ((states(entL2Current)|float)-
