@@ -9,7 +9,7 @@ Before installing your blueprint, make sure that:
 
 
 
-Currents can also be calculated by defining your own signals in configuration.yaml. Look at the example below. With this code "charge_current_limit_easee" can instead be used 
+Currents can also be calculated by defining your own signals in configuration.yaml. Look at the example below. With this code "charge_current_limit_easee" can instead be used. Define a "Helper function" that creates a min(L1,L2,L3) and call the new signal: remaining_current_all
 
 ```yaml
 
