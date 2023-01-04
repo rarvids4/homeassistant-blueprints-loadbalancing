@@ -11,6 +11,7 @@ Before installing your blueprint, make sure that:
 
 Currents can also be calculated by defining your own signals in configuration.yaml. Look at the example below. With this code "charge_current_limit_easee" can instead be used 
 
+''' yaml
 
 sensor:
   - platform: template
@@ -40,6 +41,6 @@ sensor:
         friendly_name: "Charge Limit Easee [A]"
         unit_of_measurement: 'A'
         value_template: '{{ (states("sensor.remaining_current_all")|float + states("sensor.easee1_current")|float + states("sensor.easee2_current")|float)|round(0)  }}'
-        
+'''        
         
   
