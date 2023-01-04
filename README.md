@@ -24,12 +24,12 @@ sensor:
       remaining_current_l2a:
         friendly_name: "Remaining Current L2"
         unit_of_measurement: 'A'
-        value_template: '{{ (20)|float- ( ((states("sensor.current_l2_hobergsvagen_22"))|float - ( 0 ))  )  }}'
+        value_template: '{{ (20)|float- ( ((states("sensor.current_l2"))|float - ( 0 ))  )  }}'
 
       remaining_current_l3a:
         friendly_name: "Remaining Current L3"
         unit_of_measurement: 'A'
-        value_template: '{{ (20)|float-( ((states("sensor.current_l3_hobergsvagen_22"))|float - ( 0 ))  )  }}'
+        value_template: '{{ (20)|float-( ((states("sensor.current_l3"))|float - ( 0 ))  )  }}'
         
       total_solar_power:
         friendly_name: "Total Solar Power [W]"
