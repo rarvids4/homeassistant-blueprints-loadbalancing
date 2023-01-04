@@ -3,7 +3,7 @@ blueprint:
   name: PhaseMeasurement + SolarCells + Easee PV Loadbalancing
   description: This automation connects A generic interface and Easee for PV load balancing.
     <br><br>Need to have integrations with Easee and Tibber or similar up and running
-  source_url: https://github.com/rarvids4/homeassistant-blueprints-loadbalancing/blob/main/generic_powerbalancing.yaml
+  source_url: 'https://github.com/rarvids4/homeassistant-blueprints-loadbalancing/blob/main/generic_powerbalancing.yaml'
   input:
     isolarpower:
       name: Solar Power Sensor
@@ -97,12 +97,10 @@ condition:
   after: !input 'itimestart'
   before: !input 'itimeend'
 action:
-- service: easee.set_charger_dynamic_limit
+- service: easee.set_charger_circuit_dynamic_limit
   data:
-    charger_id: '{{ state_attr(entChargerStatus,''id'') }}
-      '
-    current: '{{ valCurrentAvailableForCharging }}
-      '
+    charger_id: '{{ state_attr(entChargerStatus,''id'') }}'
+    currentP1: '{{ valCurrentAvailableForCharging }}'
 variables:
   entChargerDynamicLimit: !input 'ichargerdynamiclimit'
   entSolarPower: !input 'isolarpower'
